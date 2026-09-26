@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Status Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 60px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .status {
+            text-align: center;
+            font-size: 24px;
+            margin: 30px 0;
+        }
+
+        .healthy {
+            color: green;
+        }
+
+        .info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .card {
+            background: #f4f6f8;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>DevOps Status Dashboard</h1>
+
+    <div class="status healthy">
+        ● APPLICATION ONLINE
+    </div>
+
+    <div class="info">
+
+        <div class="card">
+            <div class="label">Application</div>
+            DevOps Status Dashboard
+        </div>
+
+        <div class="card">
+            <div class="label">Version</div>
+            1.0
+        </div>
+
+        <div class="card">
+            <div class="label">Environment</div>
+            Development
+        </div>
+
+        <div class="card">
+            <div class="label">Platform</div>
+            Local
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
