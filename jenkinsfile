@@ -1,0 +1,62 @@
+
+pipeline {
+    agent any
+
+    environment {
+        IMAGE = 'vaishnaviswami410/devops-status-dashboard:latest'
+        EC2_HOST = '13.203.105.232'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/vaishnaviswami410/devops-status-dashboard.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t $IMAGE .'
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DH_USER',
+                        passwordVariable: 'DH_TOKEN'
+                    )
+                ]) {
+                    sh '''
+                        echo "$DH_TOKEN" |
+                            docker login -u "$DH_USER" --password-stdin
+                        docker push "$IMAGE"
+                        docker logout
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy to EC2') {
+            steps {
+                sshagent(credentials: ['ec2-ssh']) {
+                    sh '''
+                        ssh -o StrictHostKeyChecking=accept-new \
+                            ubuntu@$EC2_HOST \
+                            "docker pull $IMAGE &&
+                             (docker stop devops-status-dashboard || true) &&
+                             (docker rm devops-status-dashboard || true) &&
+                             docker run -d \
+                               --name devops-status-dashboard \
+                               --restart unless-stopped \
+                               -p 80:5000 \
+                               $IMAGE"
+                    '''
+                }
+            }
+        }
+    }
+}
