@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         IMAGE = 'vaishnaviswami410/devops-status-dashboard:latest'
-        EC2_HOST = '13.203.105.232'
+        EC2_HOST = '65.0.27.50'
     }
 
     stages {
@@ -40,21 +40,29 @@ pipeline {
             }
         }
 
-        stage('Deploy to EC2') {
-            steps {
-                sshagent(credentials: ['ec2-ssh']) {
-                    sh '''
-                        ssh -o StrictHostKeyChecking=accept-new \
-                            ubuntu@$EC2_HOST \
-                            "docker pull $IMAGE &&
-                             (docker stop devops-status-dashboard || true) &&
-                             (docker rm devops-status-dashboard || true) &&
-                             docker run -d \
-                               --name devops-status-dashboard \
-                               --restart unless-stopped \
-                               -p 80:5000 \
-                               $IMAGE"
-                    '''
+        
+stage('Deploy to EC2') {
+    steps {
+        sshagent(credentials: ['ec2-ssh']) {
+            sh '''
+                set -e
+
+                echo "Deploying application to EC2..."
+
+                ssh -o StrictHostKeyChecking=accept-new \
+                    -o ConnectTimeout=15 \
+                    ubuntu@$EC2_HOST \
+                    "docker pull $IMAGE &&
+                     (docker stop devops-status-dashboard || true) &&
+                     (docker rm devops-status-dashboard || true) &&
+                     docker run -d \
+                       --name devops-status-dashboard \
+                       --restart unless-stopped \
+                       -p 80:5000 \
+                       $IMAGE"
+
+                echo "Deployment command completed."
+            '''
                 }
             }
         }
