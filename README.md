@@ -1,85 +1,108 @@
-# DevOps Status Dashboard 
+# DevOps Status Dashboard
 
-A simple web application built with **Python and Flask** as the starting point for an end-to-end DevOps project.
+A Python Flask web application deployed on AWS EC2 using Docker and an automated Jenkins CI/CD pipeline, with Prometheus and Grafana for infrastructure monitoring.
 
-##  Technologies Used
+## Overview
 
-* Python
-* Flask
-* HTML/CSS
-* Git
-* GitHub
+The DevOps Status Dashboard demonstrates a basic DevOps workflow, from source code management and automated builds to application deployment and infrastructure monitoring.
 
-##  Project Structure
+## Technologies Used
 
-```text
-devops-status-dashboard/
-│
-├── app/
-│   ├── app.py
-│   ├── requirements.txt
-│   └── templates/
-│       └── index.html
-│
-├── .gitignore
-└── README.md
-```
+- **AWS EC2** – Application hosting
+- **Linux (Ubuntu)** – Server environment
+- **Python (Flask)** – Web application
+- **Git & GitHub** – Version control and source code management
+- **Jenkins** – CI/CD automation
+- **Docker** – Application containerization
+- **Prometheus** – Metrics collection
+- **Node Exporter** – Linux system metrics
+- **Grafana** – Monitoring dashboards
 
-##  Setup and Run
+## Architecture
 
-### 1. Clone the repository
+1. Application code is maintained in GitHub.
+2. Jenkins retrieves the source code and builds the Docker image.
+3. The application is deployed to an AWS EC2 instance.
+4. Prometheus collects infrastructure metrics.
+5. Grafana visualizes the collected metrics through dashboards.
 
-```bash
-git clone <repository-url>
-cd devops-status-dashboard
-```
+## Features
 
-### 2. Create a virtual environment
+- Flask-based web application
+- Application health-check endpoint (`/health`)
+- Docker-based application deployment
+- Jenkins CI/CD pipeline integrated with GitHub
+- Automated deployment to AWS EC2
+- Infrastructure monitoring with Prometheus and Node Exporter
+- Grafana dashboards for system metrics visualization
 
-```bash
-py -m venv venv
-```
+## Application Endpoints
 
-### 3. Activate the virtual environment
+| Endpoint | Description |
+|---|---|
+| `/` | Displays the dashboard |
+| `/health` | Returns application health status in JSON format |
 
-On Windows PowerShell:
-
-```powershell
-.\venv\Scripts\Activate.ps1
-```
-
-### 4. Install dependencies
-
-```powershell
-pip install -r app\requirements.txt
-```
-
-### 5. Run the application
-
-```powershell
-py app\app.py
-```
-
-The application will be available at:
-
-```text
-http://localhost:5000
-```
-
-##  Health Check
-
-A health-check endpoint is available at:
-
-```text
-http://localhost:5000/health
-```
-
-Example response:
+Example health-check response:
 
 ```json
 {
-    "application": "DevOps Status Dashboard",
-    "status": "healthy",
-    "version": "1.0"
+  "status": "healthy",
+  "application": "DevOps Status Dashboard",
+  "version": "1.0"
 }
 ```
+
+## Monitoring
+
+Prometheus and Grafana are used to monitor infrastructure performance.
+
+The monitoring setup can visualize metrics such as:
+
+- CPU utilization
+- Memory utilization
+- Disk utilization
+- Network activity
+
+Metric availability depends on the exporters and Prometheus scrape configuration.
+
+## Deployment Workflow
+
+1. Push application changes to GitHub.
+2. Jenkins checks out the latest source code.
+3. Jenkins builds the Docker image.
+4. The pipeline deploys the application to the configured EC2 instance.
+5. Verify the application and health-check endpoint.
+6. View infrastructure metrics in Grafana.
+
+## Project Structure
+
+```text
+devops-status-dashboard/
+├── app/
+│   ├── app.py
+│   ├── templates/
+│   └── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+├── Jenkinsfile
+└── README.md
+```
+
+*Adjust the structure above to match your actual repository files.*
+
+## What I Learned
+
+- Building and containerizing a Python web application
+- Creating a Jenkins CI/CD pipeline
+- Deploying applications on AWS EC2
+- Managing Docker containers in a Linux environment
+- Collecting infrastructure metrics with Prometheus
+- Creating monitoring dashboards with Grafana
+- Troubleshooting deployment and monitoring issues
+
+## Author
+
+**Vaishnavi Swami**
+
+GitHub: [@vaishnaviswami410](https://github.com/vaishnaviswami410)
