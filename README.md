@@ -82,7 +82,7 @@ devops-status-dashboard/
 ├── app/
 │   ├── app.py
 │   └── templates/
-        └── index.html    
+|       └── index.html    
 │   
 ├── venv
 ├── Dockerfile
