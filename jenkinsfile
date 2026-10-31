@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         IMAGE = 'vaishnaviswami410/devops-status-dashboard:latest'
-        EC2_HOST = '65.0.27.50'
+        EC2_HOST = '43.204.218.13'
     }
 
     stages {
